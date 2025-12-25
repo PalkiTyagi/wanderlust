@@ -1,0 +1,55 @@
+<% layout("/layouts/boilerplate") %>
+<br />
+<div class="row mt-3">
+  <div class="col-8 offset-2">
+    <h2>creating a new listing</h2>
+
+    <form method="post" action="/listings"  novalidate class="needs-validation" enctype="multipart/form-data">
+      <div class="mb-3">
+      <label for="title" class="form-label">title</label>
+    <input type="text" name=listing[title] placeholder="enter title" class="form-control" required>
+    <div class="valid-feedback">Looks good!</div>
+   </div> 
+    
+    <br>
+    <div class="mb-3">
+      <label for="description" class="form-label" >description</label>
+    <textarea name=listing[description] placeholder="enter description" class="form-control" required></textarea>
+    <div class="invalid-feedback"> add a description</div>
+    </div>
+    <br>
+    <div class="row">
+    <div class="mb-3 col-4" >
+      <label for="price" class="form-label">price</label>
+    <input  type="text" name=listing[price] placeholder="1000" class="form-control" required>
+    <div class="invalid-feedback">please enter a price</div>
+    </div> 
+     <div class="mb-3 col-8" >
+      <label for="country" class="form-label">country</label>
+    <input type="text" name=listing[country] placeholder="India" class="form-control" required>
+     <div class="invalid-feedback"> add a country</div>
+    </div> 
+  
+    <br>
+    
+    <div class="mb-3">
+      <label for="image" class="form-label"> upload image</label>
+    <input type="file" name=listing[image]  class="form-control">
+    required
+    </div>
+    
+    <div class="mb-3">
+      <label for="location" class="form-label">location</label>
+    <input type="text" name=listing[location] placeholder="delhi" class="form-control" required>
+    <div class="invalid-feedback"> add a location</div>
+    </div>
+    </div>
+   
+      <br>
+      <button class="btn btn-dark add-btn mt-3">submitt</button>
+      <br>
+
+    </form>
+    <br>
+</div>
+</div>
