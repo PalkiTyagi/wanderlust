@@ -4,7 +4,7 @@ const router = express.Router();
 
 import { listingSchema } from "../schema.js";
 import wrapAsync from "../utils/wrapAsync.js";
-import ExpressError from "../utils/expressError.js";
+import ExpressError from "../utils/ExpressError.js";
 import ListingController from "../controllers/listing.js";
 import { isLoggedIn, isOwner } from "../middleware.js";
 
