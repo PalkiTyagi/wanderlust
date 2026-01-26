@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router({mergeParams:true });
 import wrapAsync from "../utils/wrapAsync.js";
-import ExpressError from "../utils/expressError.js";
+import ExpressError from "../utils/ExpressError.js";
 import { reviewSchema } from "../schema.js";
 import review from "../models/reviews.js"
 import {listingSchema} from "../schema.js";
