@@ -9,7 +9,7 @@ import methodOverride from "method-override";
 import mongoose from "mongoose";
 import ejsMate from "ejs-mate";
 import { fileURLToPath } from "url";
-import ExpressError from "./utils/expressError.js";
+import ExpressError from "./utils/ExpressError.js";
 
 import listingRouter from "./routes/listing.js";
 import reviewsRouter from "./routes/review.js";
