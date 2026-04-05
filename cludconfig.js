@@ -1,29 +1,22 @@
 
-
-// ...existing code...
 import dotenv from "dotenv";
 dotenv.config();
 
-import { v2 as cloudinary } from "cloudinary";
-import { CloudinaryStorage } from "multer-storage-cloudinary";
+import cloudinary from "cloudinary";
+import CloudinaryStorage from "multer-storage-cloudinary";
 
 const { CLOUD_NAME, CLOUD_API_KEY, CLOUD_API_SECRET } = process.env;
 
-if (!CLOUD_NAME || !CLOUD_API_KEY || !CLOUD_API_SECRET) {
-  throw new Error(
-    "Missing Cloudinary env vars. Set CLOUD_NAME, CLOUD_API_KEY and CLOUD_API_SECRET in your .env"
-  );
-}
-
-cloudinary.config({
+// config
+cloudinary.v2.config({
   cloud_name: CLOUD_NAME,
   api_key: CLOUD_API_KEY,
   api_secret: CLOUD_API_SECRET,
-  secure: true,
 });
 
+// storage
 const storage = new CloudinaryStorage({
-  cloudinary,
+  cloudinary: cloudinary, // 🔥 IMPORTANT FIX
   params: {
     folder: "wanderlust_DEV",
     allowed_formats: ["jpg", "jpeg", "png", "webp"],
@@ -31,4 +24,3 @@ const storage = new CloudinaryStorage({
 });
 
 export { cloudinary, storage };
-// ...existing code...

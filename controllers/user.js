@@ -32,8 +32,9 @@ const renderLoginForm = (req, res) => {
 
 /* POST login (after passport authentication) */
 const login = async (req, res) => {
+   
   req.flash("success", "Logged in successfully");
-  const redirectUrl = res.locals.redirect || "/listings";
+  const redirectUrl = res.locals.redirectUrl  || "/listings";
   res.redirect(redirectUrl);
 };
 

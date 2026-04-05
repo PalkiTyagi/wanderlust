@@ -24,6 +24,9 @@ const validateListing = (req, res, next) => {
 
 // index
 router.get("/", wrapAsync(ListingController.index));
+//router.get("/", (req, res) => {
+ // res.send("Listings route working ✅");
+//});
 
 // new
 router.get("/new", isLoggedIn, ListingController.renderNewForm);

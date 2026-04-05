@@ -23,13 +23,23 @@ const showListing = async (req, res) => {
 
   res.render("listings/show.ejs", { listing });
 };
-
 const createListing = async (req, res) => {
-  let url = req.file.path;
-  let filename = req.file.filename;
+  console.log("FILE:", req.file); // 👈 DEBUG
+
   const newListing = new Listing(req.body.listing);
   newListing.owner = req.user._id;
-  newListing.image = { url, filename };
+
+  // ✅ SAFE CHECK
+  if (req.file) {
+    newListing.image = {
+     // secure_url: req.file.path,
+      url: req.file.secure_url,
+      filename: req.file.filename,
+    };
+  } else {
+    console.log("No file uploaded ❌");
+  }
+
   await newListing.save();
 
   req.flash("success", "New listing created");
@@ -55,7 +65,8 @@ const updateListing = async (req, res) => {
  let listing =  await Listing.findByIdAndUpdate(id, { ...req.body.listing });
 
  if ( typeof req.file !== 'undefined') {
- let url = req.file.path;
+ //let url = req.file.path;
+ let url = req.file.secure_url;
   let filename = req.file.filename;
   listing.image = { url, filename };
   await listing.save();
@@ -81,3 +92,6 @@ export default {
   updateListing,
   deleteListing
 };
+
+
+

@@ -1,4 +1,4 @@
-
+console.log("🔥 THIS app.js IS RUNNING");
 // ...existing code...
 import dotenv from "dotenv";
 dotenv.config();
@@ -100,9 +100,16 @@ app.use((req, res, next) => {
   next();
 });
 
+app.get("/", (req, res) => {
+  res.redirect("/listings");
+});
+
 app.use("/listings", listingRouter);
-app.use("/listings/:id/reviews/", reviewsRouter);
+//app.use("/listings/:id/reviews/", reviewsRouter);
+app.use("/listings/:id/reviews", reviewsRouter);
 app.use("/", userRouter);
+
+
 
 app.use((req, res, next) => {
   next(new ExpressError(404, "Page Not Found"));
