@@ -1,4 +1,4 @@
-
+import axios from "axios";
 import Listing from "../models/listing.js";
 
 export const index = async (req, res) => {
@@ -13,7 +13,7 @@ const showListing = async (req, res) => {
 
   const listing = await Listing
     .findById(id)
-    .populate("reviews")
+    .populate({ path: "reviews", populate: { path: "author" } })
     .populate("owner");
 
   if (!listing) {
@@ -23,16 +23,46 @@ const showListing = async (req, res) => {
 
   res.render("listings/show.ejs", { listing });
 };
+
+
 const createListing = async (req, res) => {
-  console.log("FILE:", req.file); // 👈 DEBUG
+  console.log("FILE:", req.file);
 
   const newListing = new Listing(req.body.listing);
+
+  // OpenStreetMap Geocoding
+  try {
+    const response = await axios.get(
+      "https://nominatim.openstreetmap.org/search",
+      {
+        params: {
+          q: `${newListing.location}, ${newListing.country}`,
+          format: "json",
+          limit: 1,
+        },
+        headers: {
+          "User-Agent": "wanderlust-app",
+        },
+      }
+    );
+
+    if (response.data.length > 0) {
+      newListing.geometry = {
+        type: "Point",
+        coordinates: [
+          parseFloat(response.data[0].lon),
+          parseFloat(response.data[0].lat),
+        ],
+      };
+    }
+  } catch (err) {
+    console.log("Geocoding Error:", err.message);
+  }
+
   newListing.owner = req.user._id;
 
-  // ✅ SAFE CHECK
   if (req.file) {
     newListing.image = {
-     // secure_url: req.file.path,
       url: req.file.secure_url,
       filename: req.file.filename,
     };
@@ -45,17 +75,12 @@ const createListing = async (req, res) => {
   req.flash("success", "New listing created");
   res.redirect("/listings");
 };
-const renderEditForm = async (req, res) => {
-  const { id } = req.params;
-  const listing = await Listing.findById(id);
-
-  if (!listing) {
-    req.flash("error", "Listing does not exist");
-    return res.redirect("/listings");
-  }
-
-  res.render("listings/edit.ejs", { listing });
-};
+const renderEditForm = async (req, res) => { 
+  const { id } = req.params; const listing = await Listing.findById(id); 
+  if (!listing) { req.flash("error", "Listing does not exist");
+     return res.redirect("/listings"); 
+    }
+     res.render("listings/edit.ejs", { listing }); };
 const updateListing = async (req, res) => {
   if (!req.body.listing) {
     throw new ExpressError(400, "Send valid data");

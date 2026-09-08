@@ -45,6 +45,7 @@
 <hr>
 
  <div class="col-8 offset-3 mb-3">
+ <% if (currUser) { %>
   <h4>leave a review</h4>
   <form action="/listings/<%= listing.id %>/reviews" method="post" novalidate class="needs-validation">
     
@@ -76,6 +77,7 @@
     <button class="btn btn-outline-dark">submitt</button>
     
   </form>
+ <% } %>
   <hr>
   <p><b>all review</b></p> 
    
@@ -84,15 +86,28 @@
   <% for (let review of listing.reviews) { %>
     <div class="card col-5 ms-3 mb-3">
         <div class="card-body">
-          <h5 class="card-title"><%= review.author %></h5>
+          <h5 class="card-title"><%= review.author?.username || "Anonymous" %></h5>
           <p class="card-text "><%= review.comment %></p>
            <p class="starability-result card-text" data-rating="<%= review.rating %>">
   </p>
         </div>
-        <form class="mb-3" method="post" action="/listings/<%= listing.id %>/reviews/<%= review._id %>?_method=delete">
-          <button class="btn btn-sm btn-dark ">delete</button>
-        </form>
+        <% if (currUser && review.author && review.author._id.equals(currUser._id)) { %>
+          <form class="mb-3" method="post" action="/listings/<%= listing.id %>/reviews/<%= review._id %>?_method=delete">
+            <button class="btn btn-sm btn-dark ">delete</button>
+          </form>
+        <% } %>
       </div>
     
   <% } %>
+</div>
+<hr>
+
+<h3>Where you'll be</h3>
+
+<div id="map"></div>
+
+<script>
+  const coordinates = <%- JSON.stringify(listing.geometry.coordinates) %>;
+  const title = "<%= listing.title %>";
+</script>
 </div>

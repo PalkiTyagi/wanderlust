@@ -23,6 +23,12 @@ const createReview = async (req, res) => {
 
 const deleteReview = async (req, res) => {
   const { id, reviewId } = req.params;
+  const review = await Review.findById(reviewId);
+
+  if (!review || !review.author || !review.author.equals(req.user._id)) {
+    req.flash("error", "You don't have permission to delete this review");
+    return res.redirect(`/listings/${id}`);
+  }
 
   await Listing.findByIdAndUpdate(id, {
     $pull: { reviews: reviewId }

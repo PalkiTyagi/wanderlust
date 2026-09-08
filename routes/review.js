@@ -7,9 +7,10 @@ import review from "../models/reviews.js"
 import {listingSchema} from "../schema.js";
 import Listing from "../models/listing.js";
 import ReviewController from "../controllers/reviews.js"; 
+import { isLoggedIn } from "../middleware.js";
 
 const validateReview = (req , res , next)=>{
-   let { error } = reviewSchema.validate(Request.body);
+  let { error } = reviewSchema.validate(req.body);
  if(error){
   let errMsg = error.details.map((el)=> el.message).join(",");
   throw new ExpressError(400 , errMsg);
@@ -19,9 +20,9 @@ const validateReview = (req , res , next)=>{
 }
 
 //reviews route
-router.post("/" , validateReview, wrapAsync(ReviewController.createReview));
+router.post("/" , isLoggedIn, validateReview, wrapAsync(ReviewController.createReview));
 
 // review delete route
-router.delete("/:reviewId" , wrapAsync(ReviewController.deleteReview)
+router.delete("/:reviewId" , isLoggedIn, wrapAsync(ReviewController.deleteReview)
 );
 export default router;

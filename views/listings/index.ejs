@@ -2,41 +2,25 @@
     <%= success || "" %>
 
 <body>
-  <style>
-    #filters {
-      display: flex;
-      flex-wrap: wrap;
-    }
-    .filters {
-      text-align: center;
-      margin-right: 2rem;
-      margin-top: 2rem;
-      opacity: 0.8;
-    }
-    .filters:hover {
-      opacity: 1;
-    }
-    .filters p {
-      font-size: 0.9rem;
-    }
-  </style>
-
-  <!-- Filters Section -->
-  <div id="filters">
-    <div class="filters">
-      <div><i class="fa-solid fa-fire"></i></div>
-      <p>Trending</p>
+  <div class="category-bar">
+    <div class="category-list">
+      <div class="filters"><i class="fa-solid fa-fire"></i><span>Trending</span></div>
+      <div class="filters"><i class="fa-solid fa-bed"></i><span>Rooms</span></div>
+      <div class="filters"><i class="fa-solid fa-city"></i><span>Iconic Cities</span></div>
+      <div class="filters"><i class="fa-solid fa-mountain"></i><span>Mountains</span></div>
+      <div class="filters"><i class="fa-solid fa-chess-rook"></i><span>Castles</span></div>
+      <div class="filters"><i class="fa-solid fa-person-swimming"></i><span>Amazing Pools</span></div>
+      <div class="filters"><i class="fa-solid fa-campground"></i><span>Camping</span></div>
+      <div class="filters"><i class="fa-solid fa-wheat-awn"></i><span>Farms</span></div>
+      <div class="filters"><i class="fa-solid fa-snowflake"></i><span>Arctic</span></div>
+      <div class="filters"><i class="fa-solid fa-igloo"></i><span>Domes</span></div>
+      <div class="filters"><i class="fa-solid fa-sailboat"></i><span>Boats</span></div>
     </div>
-
-    <div class="filters">
-      <div><i class="fa-solid fa-bowl-food"></i></div>
-      <p>Food Services</p>
-    </div>
-
-    <div class="filters">
-      <div><i class="fa-solid fa-umbrella-beach"></i></div>
-      <p>Beaches</p>
-    </div>
+    <label class="tax-toggle">
+      <span>Display total after taxes</span>
+      <input type="checkbox" aria-label="Display total after taxes">
+      <span class="toggle-track"></span>
+    </label>
   </div>
 
   <!-- Listings Section -->
