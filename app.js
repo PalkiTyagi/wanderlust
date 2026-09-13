@@ -14,6 +14,7 @@ import ExpressError from "./utils/ExpressError.js";
 import listingRouter from "./routes/listing.js";
 import reviewsRouter from "./routes/review.js";
 import userRouter from "./routes/user.js";
+import bookingRouter from "./routes/booking.js";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import flash from "connect-flash";
@@ -105,6 +106,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/listings", listingRouter);
+app.use("/bookings", bookingRouter);
 //app.use("/listings/:id/reviews/", reviewsRouter);
 app.use("/listings/:id/reviews", reviewsRouter);
 app.use("/", userRouter);

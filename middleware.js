@@ -1,8 +1,11 @@
 import Listing from "./models/listing.js";
 export const isLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
-        req.session.redirectUrl = req.originalUrl;
-        req.flash("error", "Please log in first to continue");
+        const listingId = req.body?.listingId;
+        req.session.redirectUrl = listingId
+          ? `/listings/${listingId}`
+          : req.originalUrl;
+        req.flash("error", "Please login first to book this property.");
         return res.redirect("/login");
     }
     next();
